@@ -1,10 +1,9 @@
----
 # Source: crossplane/crossplane/templates/rbac-manager-serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: rbac-manager
-  namespace: confighubplaceholder
+  namespace: crossplane-system
   labels:
     app: crossplane
     helm.sh/chart: crossplane-2.0.2
@@ -20,7 +19,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: crossplane
-  namespace: confighubplaceholder
+  namespace: crossplane-system
   labels:
     app: crossplane
     helm.sh/chart: crossplane-2.0.2
@@ -36,7 +35,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: crossplane-webhooks
-  namespace: confighubplaceholder
+  namespace: crossplane-system
   labels:
     app: crossplane
     release: crossplane-system
@@ -65,7 +64,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: crossplane-tls-server
-  namespace: confighubplaceholder
+  namespace: crossplane-system
 type: Opaque
 ---
 # Source: crossplane/crossplane/templates/secret.yaml
@@ -76,7 +75,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: crossplane-tls-client
-  namespace: confighubplaceholder
+  namespace: crossplane-system
 type: Opaque
 ---
 # Source: crossplane/crossplane/templates/secret.yaml
@@ -87,7 +86,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: crossplane-root-ca
-  namespace: confighubplaceholder
+  namespace: crossplane-system
 type: Opaque
 ---
 # Source: crossplane/crossplane/templates/rbac-manager-clusterrolebinding.yaml
@@ -111,7 +110,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: rbac-manager
-  namespace: confighubplaceholder
+  namespace: crossplane-system
 ---
 # Source: crossplane/crossplane/templates/rbac-manager-managed-clusterroles.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -157,7 +156,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: crossplane
-  namespace: confighubplaceholder
+  namespace: crossplane-system
 ---
 # Source: crossplane/crossplane/templates/clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -684,7 +683,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crossplane-rbac-manager
-  namespace: confighubplaceholder
+  namespace: crossplane-system
   labels:
     app: crossplane-rbac-manager
     release: crossplane-system
@@ -790,7 +789,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: crossplane
-  namespace: confighubplaceholder
+  namespace: crossplane-system
   labels:
     app: crossplane
     release: crossplane-system

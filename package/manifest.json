@@ -7,13 +7,6 @@
   ],
   "units": [
     {
-      "slug": "crossplane-system",
-      "space_slug": "crossplane",
-      "details_loc": "/units/crossplane/crossplane-system.json",
-      "unit_data_loc": "/units/crossplane/crossplane-system.data.yaml",
-      "target": ""
-    },
-    {
       "slug": "providers",
       "space_slug": "crossplane",
       "details_loc": "/units/crossplane/providers.json",
@@ -33,18 +26,39 @@
       "details_loc": "/units/crossplane/ec2.json",
       "unit_data_loc": "/units/crossplane/ec2.data.yaml",
       "target": ""
+    },
+    {
+      "slug": "crossplane-system-ns",
+      "space_slug": "crossplane",
+      "details_loc": "/units/crossplane/crossplane-system-ns.json",
+      "unit_data_loc": "/units/crossplane/crossplane-system-ns.data.yaml",
+      "target": ""
+    },
+    {
+      "slug": "crossplane-system",
+      "space_slug": "crossplane",
+      "details_loc": "/units/crossplane/crossplane-system.json",
+      "unit_data_loc": "/units/crossplane/crossplane-system.data.yaml",
+      "target": ""
+    },
+    {
+      "slug": "network",
+      "space_slug": "crossplane",
+      "details_loc": "/units/crossplane/network.json",
+      "unit_data_loc": "/units/crossplane/network.data.yaml",
+      "target": ""
     }
   ],
   "targets": [],
   "workers": [],
   "links": [
     {
-      "slug": "providers-to-crossplane-system",
+      "slug": "ec2-to-provider-config",
       "space_slug": "crossplane",
-      "from_unit_slug": "providers",
-      "to_unit_slug": "crossplane-system",
+      "from_unit_slug": "ec2",
+      "to_unit_slug": "provider-config",
       "to_space_slug": "crossplane",
-      "details_loc": "/links/crossplane/providers-to-crossplane-system.json"
+      "details_loc": "/links/crossplane/ec2-to-provider-config.json"
     },
     {
       "slug": "provider-config-to-providers",
@@ -55,12 +69,36 @@
       "details_loc": "/links/crossplane/provider-config-to-providers.json"
     },
     {
-      "slug": "ec2-to-provider-config",
+      "slug": "providers-to-crossplane-system",
+      "space_slug": "crossplane",
+      "from_unit_slug": "providers",
+      "to_unit_slug": "crossplane-system",
+      "to_space_slug": "crossplane",
+      "details_loc": "/links/crossplane/providers-to-crossplane-system.json"
+    },
+    {
+      "slug": "crossplane-system-to-ns",
+      "space_slug": "crossplane",
+      "from_unit_slug": "crossplane-system",
+      "to_unit_slug": "crossplane-system-ns",
+      "to_space_slug": "crossplane",
+      "details_loc": "/links/crossplane/crossplane-system-to-ns.json"
+    },
+    {
+      "slug": "ec2-to-network",
       "space_slug": "crossplane",
       "from_unit_slug": "ec2",
+      "to_unit_slug": "network",
+      "to_space_slug": "crossplane",
+      "details_loc": "/links/crossplane/ec2-to-network.json"
+    },
+    {
+      "slug": "network-to-provider-config",
+      "space_slug": "crossplane",
+      "from_unit_slug": "network",
       "to_unit_slug": "provider-config",
       "to_space_slug": "crossplane",
-      "details_loc": "/links/crossplane/ec2-to-provider-config.json"
+      "details_loc": "/links/crossplane/network-to-provider-config.json"
     }
   ]
 }

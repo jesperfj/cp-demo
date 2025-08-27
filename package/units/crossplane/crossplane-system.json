@@ -1,10 +1,11 @@
 {
   "ApprovedBy": null,
-  "ContentHash": -1166950900,
+  "ContentHash": -1289670261,
   "CreatedAt": "0001-01-01T00:00:00Z",
   "DisplayName": "crossplane-system-base",
   "EntityType": "Unit",
   "Labels": {
+    "Abstract": "true",
     "HelmChart": "crossplane",
     "HelmRelease": "crossplane-system"
   },
@@ -16,7 +17,7 @@
   "TargetID": null,
   "ToolchainType": "Kubernetes/YAML",
   "UnitID": "00000000-0000-0000-0000-000000000000",
-  "UpdatedAt": "2025-08-27T16:20:03.891787Z",
+  "UpdatedAt": "2025-08-27T19:15:08.362684Z",
   "UpstreamOrganizationID": null,
   "UpstreamSpaceID": null,
   "UpstreamUnitID": null,

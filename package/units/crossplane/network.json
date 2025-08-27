@@ -1,20 +1,20 @@
 {
   "ApprovedBy": null,
-  "ContentHash": -1610780846,
+  "ContentHash": 214706391,
   "CreatedAt": "0001-01-01T00:00:00Z",
-  "DisplayName": "providers",
+  "DisplayName": "network",
   "EntityType": "Unit",
   "MutationSources": null,
   "OrganizationID": "00000000-0000-0000-0000-000000000000",
   "SetID": null,
-  "Slug": "providers",
+  "Slug": "network",
   "SpaceID": "00000000-0000-0000-0000-000000000000",
   "TargetID": null,
   "ToolchainType": "Kubernetes/YAML",
   "UnitID": "00000000-0000-0000-0000-000000000000",
-  "UpdatedAt": "2025-08-27T19:09:20.231045Z",
+  "UpdatedAt": "2025-08-27T19:59:07.446025Z",
   "UpstreamOrganizationID": null,
   "UpstreamSpaceID": null,
   "UpstreamUnitID": null,
-  "Version": 2
+  "Version": 4
 }

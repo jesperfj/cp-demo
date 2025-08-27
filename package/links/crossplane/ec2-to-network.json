@@ -1,13 +1,13 @@
 {
   "CreatedAt": "0001-01-01T00:00:00Z",
-  "DisplayName": "ec2-to-provider-config",
+  "DisplayName": "ec2-to-network",
   "EntityType": "Link",
   "FromUnitID": "00000000-0000-0000-0000-000000000000",
   "LinkID": "00000000-0000-0000-0000-000000000000",
   "OrganizationID": "00000000-0000-0000-0000-000000000000",
-  "Slug": "ec2-to-provider-config",
+  "Slug": "ec2-to-network",
   "SpaceID": "00000000-0000-0000-0000-000000000000",
   "ToSpaceID": "00000000-0000-0000-0000-000000000000",
   "ToUnitID": "00000000-0000-0000-0000-000000000000",
-  "UpdatedAt": "2025-08-27T19:10:31.301956Z"
+  "UpdatedAt": "2025-08-27T20:00:36.30277Z"
 }

@@ -95,7 +95,7 @@ spec:
     healthCheckType: EC2
     healthCheckGracePeriod: 300
     vpcZoneIdentifier:
-      - subnet-0c53f2db3ebbdc64b  # default-subnet-a in us-west-2a
+      - confighubplaceholder
     launchTemplate:
       - idRef:
           name: crossplane-ec2-launch-template
@@ -118,7 +118,7 @@ spec:
     region: us-west-2
     name: crossplane-ssm-security-group
     description: Security group for SSM access to EC2 instance (outbound only)
-    vpcId: vpc-0f2879b1d579dfed5  # default vpc in us-west-2
+    vpcId: confighubplaceholder
     tags:
       Name: crossplane-ssm-sg
       ManagedBy: Crossplane
@@ -160,36 +160,5 @@ spec:
     description: Allow HTTP outbound for package updates
     securityGroupIdRef:
       name: crossplane-ssm-sg
-  providerConfigRef:
-    name: default
----
-apiVersion: ec2.aws.upbound.io/v1beta1
-kind: DefaultVPC
-metadata:
-  name: default-vpc
-  labels:
-    crossplane.io/claim-name: default-vpc
-spec:
-  forProvider:
-    region: us-west-2
-    tags:
-      Name: default-vpc
-      ManagedBy: Crossplane
-  providerConfigRef:
-    name: default
----
-apiVersion: ec2.aws.upbound.io/v1beta1
-kind: DefaultSubnet
-metadata:
-  name: default-subnet-a
-  labels:
-    crossplane.io/claim-name: default-subnet
-spec:
-  forProvider:
-    region: us-west-2
-    availabilityZone: us-west-2a
-    tags:
-      Name: default-subnet-a
-      ManagedBy: Crossplane
   providerConfigRef:
     name: default
