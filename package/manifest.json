@@ -33,5 +33,23 @@
     }
   ],
   "targets": [],
-  "workers": []
+  "workers": [],
+  "links": [
+    {
+      "slug": "config-to-providers",
+      "space_slug": "crossplane-provider",
+      "from_unit_slug": "provider-config",
+      "to_unit_slug": "providers",
+      "to_space_slug": "crossplane-provider",
+      "details_loc": "/links/crossplane-provider/config-to-providers.json"
+    },
+    {
+      "slug": "ec2-to-provider-config",
+      "space_slug": "crossplane-ec2",
+      "from_unit_slug": "ec2-asg",
+      "to_unit_slug": "provider-config",
+      "to_space_slug": "crossplane-provider",
+      "details_loc": "/links/crossplane-ec2/ec2-to-provider-config.json"
+    }
+  ]
 }
