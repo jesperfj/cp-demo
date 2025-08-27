@@ -1,0 +1,20 @@
+{
+  "ApprovedBy": null,
+  "ContentHash": -1610780846,
+  "CreatedAt": "0001-01-01T00:00:00Z",
+  "DisplayName": "providers",
+  "EntityType": "Unit",
+  "MutationSources": null,
+  "OrganizationID": "00000000-0000-0000-0000-000000000000",
+  "SetID": null,
+  "Slug": "providers",
+  "SpaceID": "00000000-0000-0000-0000-000000000000",
+  "TargetID": null,
+  "ToolchainType": "Kubernetes/YAML",
+  "UnitID": "00000000-0000-0000-0000-000000000000",
+  "UpdatedAt": "2025-08-27T16:16:58.63788Z",
+  "UpstreamOrganizationID": null,
+  "UpstreamSpaceID": null,
+  "UpstreamUnitID": null,
+  "Version": 2
+}

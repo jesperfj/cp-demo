@@ -1,20 +1,24 @@
 {
   "ApprovedBy": null,
-  "ContentHash": 1935866636,
+  "ContentHash": -1166950900,
   "CreatedAt": "0001-01-01T00:00:00Z",
-  "DisplayName": "ec2-asg",
+  "DisplayName": "crossplane-system-base",
   "EntityType": "Unit",
+  "Labels": {
+    "HelmChart": "crossplane",
+    "HelmRelease": "crossplane-system"
+  },
   "MutationSources": null,
   "OrganizationID": "00000000-0000-0000-0000-000000000000",
   "SetID": null,
-  "Slug": "ec2-asg",
+  "Slug": "crossplane-system",
   "SpaceID": "00000000-0000-0000-0000-000000000000",
   "TargetID": null,
   "ToolchainType": "Kubernetes/YAML",
   "UnitID": "00000000-0000-0000-0000-000000000000",
-  "UpdatedAt": "2025-08-27T14:39:03.084601Z",
+  "UpdatedAt": "2025-08-27T16:20:03.891787Z",
   "UpstreamOrganizationID": null,
   "UpstreamSpaceID": null,
   "UpstreamUnitID": null,
-  "Version": 2
+  "Version": 6
 }
