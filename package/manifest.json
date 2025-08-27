@@ -1,0 +1,37 @@
+{
+  "spaces": [
+    {
+      "slug": "crossplane-provider",
+      "details_loc": "/spaces/crossplane-provider.json"
+    },
+    {
+      "slug": "crossplane-ec2",
+      "details_loc": "/spaces/crossplane-ec2.json"
+    }
+  ],
+  "units": [
+    {
+      "slug": "providers",
+      "space_slug": "crossplane-provider",
+      "details_loc": "/units/crossplane-provider/providers.json",
+      "unit_data_loc": "/units/crossplane-provider/providers.data.yaml",
+      "target": ""
+    },
+    {
+      "slug": "provider-config",
+      "space_slug": "crossplane-provider",
+      "details_loc": "/units/crossplane-provider/provider-config.json",
+      "unit_data_loc": "/units/crossplane-provider/provider-config.data.yaml",
+      "target": ""
+    },
+    {
+      "slug": "ec2-asg",
+      "space_slug": "crossplane-ec2",
+      "details_loc": "/units/crossplane-ec2/ec2-asg.json",
+      "unit_data_loc": "/units/crossplane-ec2/ec2-asg.data.yaml",
+      "target": ""
+    }
+  ],
+  "targets": [],
+  "workers": []
+}

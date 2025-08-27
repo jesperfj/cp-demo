@@ -1,0 +1,195 @@
+---
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: Role
+metadata:
+  name: crossplane-ec2-ssm-role
+spec:
+  forProvider:
+    assumeRolePolicy: |
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Principal": {
+              "Service": "ec2.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+          }
+        ]
+      }
+    tags:
+      Name: crossplane-ec2-ssm-role
+      ManagedBy: Crossplane
+  providerConfigRef:
+    name: default
+---
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+  name: crossplane-ec2-ssm-policy
+spec:
+  forProvider:
+    policyArn: arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+    roleRef:
+      name: crossplane-ec2-ssm-role
+  providerConfigRef:
+    name: default
+---
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: InstanceProfile
+metadata:
+  name: crossplane-ec2-ssm-profile
+spec:
+  forProvider:
+    roleRef:
+      name: crossplane-ec2-ssm-role
+    tags:
+      Name: crossplane-ec2-ssm-profile
+      ManagedBy: Crossplane
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: LaunchTemplate
+metadata:
+  name: crossplane-ec2-launch-template
+spec:
+  forProvider:
+    region: us-west-2
+    name: crossplane-ec2-launch-template
+    description: Launch template for auto-scaling EC2 instances with SSM
+    imageId: ami-0bca608fe0242d666  # Ubuntu 22.04 ARM64 us-west-2
+    instanceType: t4g.micro  # ARM64 instance type (Graviton)
+    iamInstanceProfile:
+      - arnRef:
+          name: crossplane-ec2-ssm-profile
+    vpcSecurityGroupIdRefs:
+      - name: crossplane-ssm-sg
+    userData: IyEvYmluL2Jhc2gKIyBJbnN0YWxsIFNTTSBBZ2VudCBvbiBVYnVudHUgKG5vdCBwcmUtaW5zdGFsbGVkIGxpa2Ugb24gQUwyKQpzbmFwIGluc3RhbGwgYW1hem9uLXNzbS1hZ2VudCAtLWNsYXNzaWMKc25hcCBzdGFydCBhbWF6b24tc3NtLWFnZW50CgojIEFsdGVybmF0aXZlIG1ldGhvZCBpZiBzbmFwIGZhaWxzCmlmICEgc3lzdGVtY3RsIGlzLWFjdGl2ZSAtLXF1aWV0IHNuYXAuYW1hem9uLXNzbS1hZ2VudC5hbWF6b24tc3NtLWFnZW50LnNlcnZpY2U7IHRoZW4KICBta2RpciAvdG1wL3NzbQogIGNkIC90bXAvc3NtCiAgd2dldCBodHRwczovL3MzLmFtYXpvbmF3cy5jb20vZWMyLWRvd25sb2Fkcy13aW5kb3dzL1NTTUFnZW50L2xhdGVzdC9kZWJpYW5fYXJtNjQvYW1hem9uLXNzbS1hZ2VudC5kZWIKICBkcGtnIC1pIGFtYXpvbi1zc20tYWdlbnQuZGViCiAgc3lzdGVtY3RsIGVuYWJsZSBhbWF6b24tc3NtLWFnZW50CiAgc3lzdGVtY3RsIHN0YXJ0IGFtYXpvbi1zc20tYWdlbnQKZmkK
+    tagSpecifications:
+      - resourceType: instance
+        tags:
+          Name: crossplane-asg-instance
+          ManagedBy: Crossplane
+          SSMEnabled: "true"
+          Architecture: arm64
+          OS: Ubuntu-22.04
+      - resourceType: volume
+        tags:
+          Name: crossplane-asg-volume
+          ManagedBy: Crossplane
+  providerConfigRef:
+    name: default
+---
+apiVersion: autoscaling.aws.upbound.io/v1beta2
+kind: AutoscalingGroup
+metadata:
+  name: crossplane-ec2-asg
+spec:
+  forProvider:
+    region: us-west-2
+    minSize: 0  # Set to 0 to stop instances
+    maxSize: 1
+    desiredCapacity: 0  # Change to 0 to stop, 1 to start
+    healthCheckType: EC2
+    healthCheckGracePeriod: 300
+    vpcZoneIdentifier:
+      - subnet-0c53f2db3ebbdc64b  # default-subnet-a in us-west-2a
+    launchTemplate:
+      - idRef:
+          name: crossplane-ec2-launch-template
+    tag:
+      - key: Name
+        value: crossplane-asg-instance
+        propagateAtLaunch: true
+      - key: ManagedBy
+        value: Crossplane
+        propagateAtLaunch: true
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+  name: crossplane-ssm-sg
+spec:
+  forProvider:
+    region: us-west-2
+    name: crossplane-ssm-security-group
+    description: Security group for SSM access to EC2 instance (outbound only)
+    vpcId: vpc-0f2879b1d579dfed5  # default vpc in us-west-2
+    tags:
+      Name: crossplane-ssm-sg
+      ManagedBy: Crossplane
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: SecurityGroupRule
+metadata:
+  name: crossplane-https-egress
+spec:
+  forProvider:
+    region: us-west-2
+    type: egress
+    fromPort: 443
+    toPort: 443
+    protocol: tcp
+    cidrBlocks:
+      - 0.0.0.0/0
+    description: Allow HTTPS outbound for SSM endpoints
+    securityGroupIdRef:
+      name: crossplane-ssm-sg
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: SecurityGroupRule
+metadata:
+  name: crossplane-http-egress
+spec:
+  forProvider:
+    region: us-west-2
+    type: egress
+    fromPort: 80
+    toPort: 80
+    protocol: tcp
+    cidrBlocks:
+      - 0.0.0.0/0
+    description: Allow HTTP outbound for package updates
+    securityGroupIdRef:
+      name: crossplane-ssm-sg
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: DefaultVPC
+metadata:
+  name: default-vpc
+  labels:
+    crossplane.io/claim-name: default-vpc
+spec:
+  forProvider:
+    region: us-west-2
+    tags:
+      Name: default-vpc
+      ManagedBy: Crossplane
+  providerConfigRef:
+    name: default
+---
+apiVersion: ec2.aws.upbound.io/v1beta1
+kind: DefaultSubnet
+metadata:
+  name: default-subnet-a
+  labels:
+    crossplane.io/claim-name: default-subnet
+spec:
+  forProvider:
+    region: us-west-2
+    availabilityZone: us-west-2a
+    tags:
+      Name: default-subnet-a
+      ManagedBy: Crossplane
+  providerConfigRef:
+    name: default
